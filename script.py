@@ -27,7 +27,6 @@ import itertools
 import os
 
 
-
 def splitter(file,dirname):
     counter = 0
     with open(file, 'r') as f:
@@ -43,9 +42,14 @@ def splitter(file,dirname):
         counter += 1
         name = dirname + '{}.txt'.format(counter)
         with open(os.path.join(dirname,name), 'w') as o1:
-            o1.write(str(contents[i]))
+            print(contents)
+            if i in range(len(contents)):
+                o1.write(str(contents[i]))
         
         lst.append(name)
+    # print(lst)
+    # print(counter)
+    # print(dirname)
     
     get_random_pairs(lst,counter,dirname)
     
@@ -57,15 +61,20 @@ def splitter(file,dirname):
 def get_random_pairs(lst,counter,dirname): 
     pairs = list(itertools.combinations(lst, 2))
     tri_pairs = list(itertools.combinations(lst, 3)) 
+    
     random.shuffle(pairs)
     random.shuffle(tri_pairs) 
+    # print(pairs)
+    # print(tri_pairs)
                        
     if pairs:
         for fname in pairs:
             counter +=1
             name = dirname + '{}.txt'.format(counter)
+            print(name)
             with open(os.path.join(dirname,name),'w') as outfile:
                 for indi in fname:
+                    indi = dirname + '/{}'.format(indi)
                     with open(indi) as infile:
                         outfile.write(infile.read())
                     outfile.write("\n\n")
@@ -76,6 +85,7 @@ def get_random_pairs(lst,counter,dirname):
             name = dirname + '{}.txt'.format(counter)
             with open(os.path.join(dirname,name),'w') as outfile:
                 for indi in fname:
+                    indi = dirname + '/{}'.format(indi)
                     with open(indi) as infile:
                         outfile.write(infile.read())
                     outfile.write("\n\n")
